@@ -15,7 +15,12 @@ public class ListCommand extends MarketCommand {
     public void execute(Market market) throws MarketError {
         try {
             info("Items in market:");
-            market.list().forEach(item -> info(" " + item));
+            String rowFormat = "| %-15s | %-7d | %-10s |%n";
+            System.out.format("+-----------------+---------+------------+%n");
+            System.out.format("| Name            | Price   | Owner      |%n");
+            System.out.format("+-----------------+---------+------------+%n");
+            market.list().forEach(item -> System.out.format(rowFormat, item.getName(), item.getPrice(), item.getOwner()));
+            System.out.format("+-----------------+---------+------------+%n");
         } catch (RemoteException e) {
             e.printStackTrace();
         }

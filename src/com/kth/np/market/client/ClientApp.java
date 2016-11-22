@@ -58,14 +58,14 @@ public class ClientApp {
             app.eventSubscriber.subscribe(new ItemSold() {
                 @Override
                 public void invoke(Item item) throws RemoteException {
-                    System.out.println("Item has been sold: " + item);
+                    System.out.println("Item has been sold: " + item.toStr() + " to " + item.getOwner());
                 }
             });
 
             app.eventSubscriber.subscribe(new WishlistItemAvailable() {
                 @Override
                 public void invoke(Item item) throws RemoteException {
-                    System.out.println("Wishlist item available: " + item);
+                    System.out.println("Wishlist item available: " + item.toStr() + " by " + item.getOwner());
                 }
             });
         } catch (RemoteException e) {

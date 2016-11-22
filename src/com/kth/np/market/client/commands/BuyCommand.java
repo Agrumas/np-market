@@ -18,7 +18,7 @@ public class BuyCommand extends MarketCommand {
     public void execute(Market market) throws MarketError {
         try {
             Item item = market.buy(new Item(itemName, price));
-            info("You have bought a item: " + item);
+            info("You have bought a item: " + item.getName() + "($" + item.getPrice() + ")");
         } catch (RemoteException e) {
             e.printStackTrace();
         }

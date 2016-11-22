@@ -35,7 +35,7 @@ public class TransactionsService {
         if (balance < amount) {
             throw new InsufficientFundsError("Not enough money");
         }
-        Account accTo = getAccount(from);
+        Account accTo = getAccount(to);
         try {
             accFrom.withdraw(transAmount);
             try {
@@ -78,7 +78,7 @@ public class TransactionsService {
     }
 
     protected Bank getBank(User user) {
-        String bankName = user.getBankAccount();
+        String bankName = user.getBank();
         Bank bank = banks.get(bankName);
         if (bank != null) {
             return bank;

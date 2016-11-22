@@ -68,6 +68,8 @@ public class Item implements Serializable {
         return name.equals(item.getName()) && price == item.getPrice();
     }
 
+
+
     public boolean isSameCheaperThan(Item item) {
         return name.equals(item.getName()) && price <= item.getPrice();
     }
@@ -79,5 +81,9 @@ public class Item implements Serializable {
                 ", price=" + price +
                 ", owner='" + owner + '\'' +
                 '}';
+    }
+
+    public String toStr(){
+        return name + "($"+price+")";
     }
 }

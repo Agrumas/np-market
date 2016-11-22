@@ -15,7 +15,12 @@ public class WishlistCommand extends MarketCommand {
     public void execute(Market market) throws MarketError {
         try {
             info("Items in wishlist:");
-            market.getWishlist().forEach(item -> info(" " + item));
+            String rowFormat = "| %-15s | %-7d |%n";
+            System.out.format("+-----------------+---------+%n");
+            System.out.format("| Name            | Price   |%n");
+            System.out.format("+-----------------+---------+%n");
+            market.getWishlist().forEach(item -> System.out.format(rowFormat, item.getName(), item.getPrice()));
+            System.out.format("+-----------------+---------+%n");
         } catch (RemoteException e) {
             e.printStackTrace();
         }
