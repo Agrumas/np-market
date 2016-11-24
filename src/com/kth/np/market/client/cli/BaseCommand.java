@@ -14,7 +14,13 @@ public abstract class BaseCommand extends Command {
     public void execute() {
         cCLI = (ClientCLI) getCli();
         app = cCLI.getApp();
-        if(prepare()){
+        boolean prepared = false;
+        try {
+            prepared = prepare();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(prepared){
             execute(cCLI);
         } else {
             printUsage();

@@ -1,6 +1,7 @@
 package com.kth.np.market.server.user;
 
 import com.kth.np.market.common.Item;
+import com.kth.np.market.common.User;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -9,10 +10,10 @@ import java.util.stream.Collectors;
 /**
  * Created by Algirdas on 11/18/2016.
  */
-public class Wishlist {
+public class Wishlists {
     LinkedList<Item> list;
 
-    public Wishlist() {
+    public Wishlists() {
         this.list = new LinkedList<>();
     }
 

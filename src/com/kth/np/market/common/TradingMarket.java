@@ -11,7 +11,7 @@ import java.rmi.RemoteException;
  */
 public interface TradingMarket extends Remote {
     public final String NAME = "GlobalMarket";
-    public Market register(String name, String bank) throws RemoteException, UserIsRegistredError;
+    public Market register(String name, String password, String bank) throws RemoteException, UserIsRegistredError, InvalidCredentialsError;
     public Market login(String name, String pass) throws RemoteException, InvalidCredentialsError;
 
 }

@@ -2,7 +2,7 @@ package com.kth.np.market.server.market;
 
 import com.kth.np.market.common.*;
 import com.kth.np.market.common.exceptions.*;
-import com.kth.np.market.server.user.User;
+import com.kth.np.market.common.User;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -56,7 +56,7 @@ public class UserMarket extends UnicastRemoteObject implements Market {
 
     @Override
     public Collection<Item> list() throws RemoteException {
-        return new ArrayList<>(market.marketList.list.values());
+        return market.marketList.find();
     }
 
     @Override

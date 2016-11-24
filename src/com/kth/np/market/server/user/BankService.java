@@ -1,5 +1,6 @@
 package com.kth.np.market.server.user;
 
+import com.kth.np.market.common.User;
 import com.kth.np.market.common.exceptions.BankAccountNotAccesibleError;
 import com.kth.np.market.common.exceptions.InsufficientFundsError;
 import se.kth.id2212.ex2.bankrmi.Account;
@@ -15,10 +16,10 @@ import java.util.HashMap;
 /**
  * Created by Algirdas on 11/22/2016.
  */
-public class TransactionsService {
+public class BankService {
     HashMap<String, Bank> banks;
 
-    public TransactionsService() {
+    public BankService() {
         banks = new HashMap<>();
     }
 

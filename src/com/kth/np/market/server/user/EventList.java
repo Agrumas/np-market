@@ -2,6 +2,7 @@ package com.kth.np.market.server.user;
 
 import com.kth.np.market.common.Item;
 import com.kth.np.market.common.ItemActionCallback;
+import com.kth.np.market.common.User;
 
 import java.rmi.RemoteException;
 import java.util.Collection;

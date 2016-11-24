@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+
+    <persistence-unit name="MarketDB">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>com.kth.np.market.common.Item</class>
+        <class>com.kth.np.market.common.UserActivity</class>
+        <class>com.kth.np.market.common.User</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <property name="hibernate.connection.url" value="jdbc:mariadb://localhost:3306/market"/>
+            <property name="hibernate.connection.driver_class" value="org.mariadb.jdbc.Driver"/>
+            <property name="hibernate.connection.username" value="root"/>
+            <property name="hibernate.connection.password" value=""/>
+        </properties>
+    </persistence-unit>
+</persistence>

@@ -14,12 +14,13 @@ import java.rmi.RemoteException;
  */
 public class RegisterCommand extends TradingMarketCommand {
     protected String username = null;
+    protected String password = null;
     protected String bank = null;
 
     @Override
     public void execute(TradingMarket tradingMarket) throws MarketError {
         try {
-            Market market = tradingMarket.register(username, bank);
+            Market market = tradingMarket.register(username, password, bank);
             ClientApp app = getApp();
             app.setMarket(market);
             market.subscribeEvents(app.getEventSubscriber().getSubscriptions());
@@ -38,13 +39,14 @@ public class RegisterCommand extends TradingMarketCommand {
             return false;
         }
         username = options[0].trim();
-        bank = options[1].trim();
+        password = options[1].trim();
+        bank = options[2].trim();
 
-        return !username.isEmpty() && !bank.isEmpty();
+        return !username.isEmpty() && !password.isEmpty() && !bank.isEmpty();
     }
 
     @Override
     public void printUsage() {
-        System.out.println("Usage: " + getName() + " username bankName");
+        System.out.println("Usage: " + getName() + " username password bankName");
     }
 }
