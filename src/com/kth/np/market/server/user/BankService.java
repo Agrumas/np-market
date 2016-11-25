@@ -24,10 +24,11 @@ public class BankService {
     }
 
     public void transfer(User from, User to, int amount) throws BankAccountNotAccesibleError, InsufficientFundsError {
-        Account accFrom = getAccount(from);
+        Account accFrom;
         float balance,
                 transAmount = (float) amount;
         try {
+            accFrom = getAccount(from);
             balance = accFrom.getBalance();
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -63,7 +64,7 @@ public class BankService {
     protected Account getAccount(User user) throws BankAccountNotAccesibleError {
         Bank bank = getBank(user);
         if (bank == null) {
-            return null;
+            throw new BankAccountNotAccesibleError("Can not access user account. Bank is offline.");
         }
         Account acc = null;
         try {

@@ -12,10 +12,11 @@ import java.util.Collection;
 public interface Market extends Remote {
     public void sell(Item item) throws RemoteException, ItemOnSaleError;
     public Item buy(Item item) throws RemoteException, InsufficientFundsError, ItemNotFoundError, BankAccountNotAccesibleError;
-    public void wishlistAdd(Item item) throws RemoteException, ItemInWishlistError;
-    public void wishlistRemove(Item item) throws RemoteException;
-    public Collection<Item> getWishlist() throws RemoteException;
+    public void wishlistAdd(WishlistItem item) throws RemoteException, ItemInWishlistError;
+    public void wishlistRemove(WishlistItem item) throws RemoteException;
+    public Collection<WishlistItem> getWishlist() throws RemoteException;
     public void subscribeEvents(Collection <ItemActionCallback> callbacks) throws RemoteException;
     public Collection<Item> list() throws RemoteException;
+    public UserActivity getStats() throws RemoteException;
     public void logout() throws RemoteException;
 }

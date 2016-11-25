@@ -10,6 +10,7 @@ import com.kth.np.market.common.cli.Command;
 public abstract class BaseCommand extends Command {
     ClientApp app;
     ClientCLI cCLI;
+
     @Override
     public void execute() {
         cCLI = (ClientCLI) getCli();
@@ -20,7 +21,7 @@ public abstract class BaseCommand extends Command {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if(prepared){
+        if (prepared) {
             execute(cCLI);
         } else {
             printUsage();
@@ -31,11 +32,12 @@ public abstract class BaseCommand extends Command {
 
     public boolean prepare() {
         return true;
-    };
+    }
 
     public void printUsage() {
         System.out.println("USAGE: " + getName());
-    };
+    }
+
 
     public ClientApp getApp() {
         return app;

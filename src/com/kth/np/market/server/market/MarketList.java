@@ -49,7 +49,7 @@ public class MarketList {
     public synchronized void remove(Item item) {
         EntityManager em = db.getEntityManager();
         em.getTransaction().begin();
-        em.remove(item);
+        em.remove(em.contains(item) ? item : em.merge(item));
         em.getTransaction().commit();
         em.close();
     }

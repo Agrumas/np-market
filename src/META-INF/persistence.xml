@@ -6,6 +6,7 @@
         <class>com.kth.np.market.common.Item</class>
         <class>com.kth.np.market.common.UserActivity</class>
         <class>com.kth.np.market.common.User</class>
+        <class>com.kth.np.market.common.WishlistItem</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.connection.url" value="jdbc:mariadb://localhost:3306/market"/>

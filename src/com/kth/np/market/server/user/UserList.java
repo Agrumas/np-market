@@ -51,4 +51,16 @@ public class UserList {
             return user;
         }).getResult();
     }
+
+    public synchronized void updateStats(User buyer, User seller) {
+        new DbQuery<User>(db).transaction((EntityManager em) -> {
+            UserActivity sA = seller.getUserActivity();
+            UserActivity bA = buyer.getUserActivity();
+            sA.setSold(sA.getSold() + 1);
+            bA.setBought(bA.getBought() + 1);
+            em.persist(em.contains(sA) ? sA : em.merge(sA));
+            em.persist(em.contains(bA) ? bA : em.merge(bA));
+            return null;
+        }).getResult();
+    }
 }

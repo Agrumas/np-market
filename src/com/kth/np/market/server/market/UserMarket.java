@@ -40,12 +40,12 @@ public class UserMarket extends UnicastRemoteObject implements Market {
     }
 
     @Override
-    public void wishlistAdd(Item item) throws RemoteException, ItemInWishlistError {
+    public void wishlistAdd(WishlistItem item) throws RemoteException, ItemInWishlistError {
         market.addToWishlist(user, item);
     }
 
     @Override
-    public void wishlistRemove(Item item) throws RemoteException {
+    public void wishlistRemove(WishlistItem item) throws RemoteException {
         market.removeFromWishlist(user, item);
     }
 
@@ -65,8 +65,13 @@ public class UserMarket extends UnicastRemoteObject implements Market {
     }
 
     @Override
-    public Collection<Item> getWishlist() throws RemoteException {
+    public Collection<WishlistItem> getWishlist() throws RemoteException {
         return market.listWishlist(user);
+    }
+
+    @Override
+    public UserActivity getStats() throws RemoteException {
+        return user.getUserActivity();
     }
 }
 

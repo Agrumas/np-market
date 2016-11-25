@@ -18,7 +18,7 @@ public class GlobalMarket extends UnicastRemoteObject implements TradingMarket {
     protected UserList users;
     protected MarketList marketList;
     protected EventList eventList;
-    protected Wishlists wishlists;
+    protected Wishlist wishlist;
     protected BankService bankService;
     protected EntityManagerFactory emfactory;
     protected Db db;
@@ -26,11 +26,11 @@ public class GlobalMarket extends UnicastRemoteObject implements TradingMarket {
     public GlobalMarket() throws RemoteException {
         super();
         eventList = new EventList();
-        wishlists = new Wishlists();
         bankService = new BankService();
         emfactory = Persistence.createEntityManagerFactory("MarketDB");
         db = new Db(emfactory);
         users = new UserList(db);
+        wishlist = new Wishlist(db);
         marketList = new MarketList(db);
     }
 
@@ -58,11 +58,13 @@ public class GlobalMarket extends UnicastRemoteObject implements TradingMarket {
         if (!user.isPasswordTheSame(pass)) {
             throw new InvalidCredentialsError();
         }
+        wishlist.loadByUser(user);
         return new UserMarket(this, user);
     }
 
     public void logout(User user) {
         System.out.println("[" + user.getId() + "] logout");
+        wishlist.removeByUser(user);
         eventList.unsubscribe(user);
     }
 
@@ -76,7 +78,7 @@ public class GlobalMarket extends UnicastRemoteObject implements TradingMarket {
             throw new ItemOnSaleError("Item is already on sale.");
         }
         marketList.add(item);
-        wishlists.match(item).forEach(wlItem -> {
+        wishlist.match(item).forEach(wlItem -> {
             eventList.emit(wlItem.getOwner(), ItemActionCallback.Types.WISHLIST_ITEM_AVAILABLE, item);
         });
     }
@@ -89,29 +91,31 @@ public class GlobalMarket extends UnicastRemoteObject implements TradingMarket {
 
         User owner = users.get(itemToBuy.getOwner());
         bankService.transfer(user, owner, itemToBuy.getPrice());
-
+        users.updateStats(user, owner);
         marketList.remove(itemToBuy);
         itemToBuy.setOwner(user);
         eventList.emit(owner, ItemActionCallback.Types.ITEM_SOLD, itemToBuy);
         return itemToBuy;
     }
 
-    public void addToWishlist(User user, Item item) throws ItemInWishlistError {
+    public void addToWishlist(User user, WishlistItem item) throws ItemInWishlistError {
         item.setOwner(user);
-        if (wishlists.exists(item)) {
-            throw new ItemInWishlistError("Item is already in wishlists");
+        if (wishlist.exists(item)) {
+            throw new ItemInWishlistError("Item is already in wishlist");
         }
-        wishlists.add(item);
+        wishlist.add(item);
     }
 
-    public Collection<Item> listWishlist(User user) {
-        return wishlists.getByUser(user);
+    public Collection<WishlistItem> listWishlist(User user) {
+        return wishlist.getByUser(user);
     }
 
-    public boolean removeFromWishlist(User user, Item item) {
+    public boolean removeFromWishlist(User user, WishlistItem item) {
         item.setOwner(user);
-        return wishlists.remove(item);
+        return wishlist.remove(item);
     }
+
+
 
 
 }

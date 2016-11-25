@@ -1,9 +1,11 @@
 package com.kth.np.market.common;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Collection;
 
 /**
  * Created by Algirdas on 11/18/2016.
@@ -15,8 +17,9 @@ public class User {
     protected String bank;
     protected String bankAccount;
     private String id;
-    private String password;
+    transient private String password;
     private UserActivity userActivity;
+    private Collection<WishlistItem> wishlistItems;
 
     public User() {
     }
@@ -31,7 +34,7 @@ public class User {
             e.printStackTrace();
         }
         byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
-        this.password = String.format("%064x", new java.math.BigInteger(1, hash));
+        this.password = String.format("%064x", new BigInteger(1, hash));
         this.bank = bank;
         this.bankAccount = name;
     }
@@ -94,7 +97,7 @@ public class User {
             e.printStackTrace();
         }
         byte[] hash = digest.digest(plain.getBytes(StandardCharsets.UTF_8));
-        return this.password.equals(String.format("%064x", new java.math.BigInteger(1, hash)));
+        return this.password.equals(String.format("%064x", new BigInteger(1, hash)));
     }
 
     @Override
@@ -133,5 +136,14 @@ public class User {
             userActivity.setId(id);
         }
         this.userActivity = userActivity;
+    }
+
+    @OneToMany(mappedBy = "user")
+    public Collection<WishlistItem> getWishlistItems() {
+        return wishlistItems;
+    }
+
+    public void setWishlistItems(Collection<WishlistItem> wishlistItems) {
+        this.wishlistItems = wishlistItems;
     }
 }

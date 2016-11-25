@@ -1,8 +1,8 @@
 package com.kth.np.market.client.commands;
 
 import com.kth.np.market.client.cli.MarketCommand;
-import com.kth.np.market.common.Item;
 import com.kth.np.market.common.Market;
+import com.kth.np.market.common.WishlistItem;
 import com.kth.np.market.common.exceptions.MarketError;
 
 import java.rmi.RemoteException;
@@ -17,7 +17,7 @@ public class WishlistAddCommand extends MarketCommand {
     @Override
     public void execute(Market market) throws MarketError {
         try {
-            market.wishlistAdd(new Item(itemName, price));
+            market.wishlistAdd(new WishlistItem(itemName, price));
             info("Item has been added to wishlist.");
         } catch (RemoteException e) {
             e.printStackTrace();

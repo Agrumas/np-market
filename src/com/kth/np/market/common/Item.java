@@ -83,10 +83,6 @@ public class Item implements Serializable {
         return name.equals(item.getName()) && price == item.getPrice();
     }
 
-    public boolean isSameCheaperThan(Item item) {
-        return name.equals(item.getName()) && price <= item.getPrice();
-    }
-
     @Override
     public String toString() {
         return "Item{" +

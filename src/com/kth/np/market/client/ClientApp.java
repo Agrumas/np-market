@@ -47,8 +47,10 @@ public class ClientApp {
         cli.register(RegisterCommand.class);
         cli.register(LoginCommand.class);
         cli.register(ExitCommand.class);
+        cli.register("logout", ExitCommand.class);
         cli.register(SellCommand.class);
         cli.register(BuyCommand.class);
+        cli.register(StatsCommand.class);
         cli.register(ListCommand.class);
         cli.register(WishlistAddCommand.class);
         cli.register(WishlistCommand.class);
