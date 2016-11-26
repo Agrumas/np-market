@@ -53,14 +53,28 @@ public class UserList {
     }
 
     public synchronized void updateStats(User buyer, User seller) {
-        new DbQuery<User>(db).transaction((EntityManager em) -> {
+        new DbQuery<UserActivity>(db).transaction((EntityManager em) -> {
             UserActivity sA = seller.getUserActivity();
-            UserActivity bA = buyer.getUserActivity();
+            UserActivity bA = !seller.equals(buyer) ? buyer.getUserActivity() : sA;
             sA.setSold(sA.getSold() + 1);
             bA.setBought(bA.getBought() + 1);
             em.persist(em.contains(sA) ? sA : em.merge(sA));
-            em.persist(em.contains(bA) ? bA : em.merge(bA));
+            if (sA != bA) {
+                em.persist(em.contains(bA) ? bA : em.merge(bA));
+            }
             return null;
+        }).getResult();
+    }
+
+    public UserActivity getActivity(User user) {
+        return new DbQuery<UserActivity>(db).transaction((EntityManager em) -> {
+            Query query = em.createQuery("select a from UserActivity a where a.id = :id");
+            query.setParameter("id", user.getId());
+            try {
+                return (UserActivity) query.getSingleResult();
+            } catch (NoResultException noResult) {
+                return null;
+            }
         }).getResult();
     }
 }

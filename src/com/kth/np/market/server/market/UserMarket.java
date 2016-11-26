@@ -71,7 +71,7 @@ public class UserMarket extends UnicastRemoteObject implements Market {
 
     @Override
     public UserActivity getStats() throws RemoteException {
-        return user.getUserActivity();
+        return market.getActivity(user);
     }
 }
 

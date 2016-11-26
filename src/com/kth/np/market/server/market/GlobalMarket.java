@@ -89,12 +89,17 @@ public class GlobalMarket extends UnicastRemoteObject implements TradingMarket {
             throw new ItemNotFoundError("Item is not found.");
         }
 
+        if (itemToBuy.getAmount() < item.getAmount()) {
+            throw new ItemNotFoundError("Only " + itemToBuy.getAmount() + " pieces left.");
+        }
+
         User owner = users.get(itemToBuy.getOwner());
-        bankService.transfer(user, owner, itemToBuy.getPrice());
+        bankService.transfer(user, owner, itemToBuy.getPrice() * item.getAmount());
         users.updateStats(user, owner);
-        marketList.remove(itemToBuy);
-        itemToBuy.setOwner(user);
-        eventList.emit(owner, ItemActionCallback.Types.ITEM_SOLD, itemToBuy);
+        itemToBuy.setAmount(itemToBuy.getAmount() - item.getAmount());
+        marketList.save(itemToBuy);
+        item.setOwner(user);
+        eventList.emit(owner, ItemActionCallback.Types.ITEM_SOLD, item);
         return itemToBuy;
     }
 
@@ -115,7 +120,8 @@ public class GlobalMarket extends UnicastRemoteObject implements TradingMarket {
         return wishlist.remove(item);
     }
 
-
-
+    public UserActivity getActivity(User user){
+        return users.getActivity(user);
+    }
 
 }

@@ -16,7 +16,7 @@ public class StatsCommand extends MarketCommand {
     public void execute(Market market) throws MarketError {
         try {
             UserActivity stats = market.getStats();
-            System.out.println("You have sell " + stats.getSold() + " and bought " + stats.getBought() + " items");
+            System.out.println("You have sell " + stats.getSold() + " and bought " + stats.getBought() + " item(s)");
         } catch (RemoteException e) {
             e.printStackTrace();
         }

@@ -19,7 +19,7 @@ public class ListCommand extends MarketCommand {
             System.out.format("+-----------------+---------+------------+%n");
             System.out.format("| Name            | Price   | Owner      |%n");
             System.out.format("+-----------------+---------+------------+%n");
-            market.list().forEach(item -> System.out.format(rowFormat, item.getName(), item.getPrice(), item.getOwner()));
+            market.list().forEach(item -> System.out.format(rowFormat, item.formatedName(), item.getPrice(), item.getOwner()));
             System.out.format("+-----------------+---------+------------+%n");
         } catch (RemoteException e) {
             e.printStackTrace();

@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "user_activity", schema = "market", catalog = "")
 public class UserActivity implements Serializable {
-    private User user;
+    transient private User user;
     private String id;
     private int sold = 0;
     private int bought = 0;

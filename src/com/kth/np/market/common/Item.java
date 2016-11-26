@@ -19,15 +19,25 @@ public class Item implements Serializable {
     public Item() {
 
     }
+
     public Item(String name, int price) {
-        this(name, price, null);
+        this(name, price, null, 1);
+    }
+
+    public Item(String name, int price, int amount) {
+        this(name, price, null, amount);
     }
 
     public Item(String name, int price, String owner) {
+        this(name, price, owner, 1);
+    }
+
+    public Item(String name, int price, String owner, int amount) {
         this.name = name;
         this.price = price;
         this.owner = owner;
         id = UUID.randomUUID().toString();
+        this.amount = amount;
     }
 
     @Id
@@ -50,6 +60,13 @@ public class Item implements Serializable {
         this.name = name;
     }
 
+    public String formatedName() {
+        if (amount >= 2) {
+            return name + " (x" + amount + ")";
+        }
+        return name;
+    }
+
     @Basic
     @Column(name = "price")
     public int getPrice() {
@@ -65,6 +82,7 @@ public class Item implements Serializable {
     public String getOwner() {
         return owner;
     }
+
     public void setOwner(String owner) {
         this.owner = owner;
     }
@@ -92,8 +110,8 @@ public class Item implements Serializable {
                 '}';
     }
 
-    public String toStr(){
-        return name + "($"+price+")";
+    public String toStr() {
+        return name + "($" + price + ")";
     }
 
     @Basic

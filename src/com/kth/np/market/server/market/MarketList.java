@@ -46,6 +46,19 @@ public class MarketList {
         return findOne(item) != null;
     }
 
+    public synchronized void save(Item item) {
+        EntityManager em = db.getEntityManager();
+        em.getTransaction().begin();
+        item = em.contains(item) ? item : em.merge(item);
+        if(item.getAmount() <= 0){
+            em.remove(item);
+        } else {
+            em.persist(item);
+        }
+        em.getTransaction().commit();
+        em.close();
+    }
+
     public synchronized void remove(Item item) {
         EntityManager em = db.getEntityManager();
         em.getTransaction().begin();
